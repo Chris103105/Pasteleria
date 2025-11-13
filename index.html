@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Pasteles</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CONFIGURACIÓN BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            color: #4a4a4a;
+            background-color: #fff;
+        }
+
+        img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+        }
+
+        /* --- 1. SECCIÓN BANNER ROSA (Asimétrico) --- */
+        .banner-section {
+            display: grid;
+            grid-template-columns: 3fr 1fr; /* El texto ocupa el doble que la foto */
+            min-height: 400px;
+            width: 100%;
+        }
+
+        .banner-text {
+            background-color: #faecee; /* El color rosa exacto */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 15%; /* Padding lateral amplio para centrar visualmente */
+        }
+
+        .banner-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 400;
+            color: #333;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        
+        /* Para simular el estilo de texto de la imagen */
+        .banner-text h2 span { font-weight: 700; color: #b5848e; }
+
+        .banner-text p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: #666;
+            max-width: 500px;
+        }
+
+
+
+
+
+
+
+
+
+
+ /* --- HEADER / MENÚ DE NAVEGACIÓN --- */
+        header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .login-link {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .login-link i { margin-right: 8px; }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #555;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* --- TÍTULO PRINCIPAL --- */
+        .brand-title {
+            text-align: center;
+            padding: 40px 20px;
+            font-family: 'Playfair Display', serif; /* Fuente elegante para el título */
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* --- SECCIÓN HERO (Las 3 Columnas) --- */
+        .hero-grid {
+            display: grid;
+            /* Aquí definimos 3 columnas de igual tamaño */
+            grid-template-columns: 1fr 1fr 1fr;
+            height: 600px; /* Altura fija para desktop */
+            width: 100%;
+        }
+
+        .grid-item {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Imágenes */
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Esto asegura que la imagen cubra el espacio sin deformarse */
+            display: block;
+        }
+
+        /* Panel Central de Texto */
+        .text-panel {
+            background-color: #fef0eadd; /* Color "durazno" claro similar a la foto */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .text-panel h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            color: #333;
+        }
+
+        .btn-order {
+            background-color: white;
+            color: #333;
+            padding: 15px 30px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .btn-order:hover {
+            background-color: #333;
+            color: white;
+        }
+
+        /* --- BOTÓN DE CHAT FLOTANTE --- */
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #9d8189; /* Color similar al de la foto */
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1000;
+            font-weight: 500;
+        }
+
+        /* --- RESPONSIVE (MÓVIL) --- */
+        @media (max-width: 768px) {
+            /* Ajustes del Header */
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                font-size: 0.8rem;
+            }
+
+            /* Ajustes de la Cuadrícula Principal */
+            .hero-grid {
+                grid-template-columns: 1fr; /* Una sola columna */
+                height: auto; /* Altura automática según contenido */
+            }
+
+            /* Orden visual: Queremos ver una imagen, luego texto, luego imagen */
+            .item-1 { order: 1; height: 300px; }
+            .item-2 { order: 2; height: auto; padding: 60px 20px; } /* El texto */
+            .item-3 { order: 3; height: 300px; }
+
+            .text-panel h2 {
+                font-size: 2rem;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* --- 2. SECCIÓN TRÍPTICO (Pastel - Chef - Pastel) --- */
+       .middle-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 30px; /* Espacio entre tarjetas */
+        padding: 0 40px;
+        margin-top: 40px;
+        margin-bottom: 60px;
+    }
+
+    .grid-card {
+        display: flex;
+        flex-direction: column;
+        /* Quitamos la altura fija y el overflow hidden para que el texto quepa */
+        height: auto; 
+        text-align: center;
+    }
+
+    /* Contenedor de la imagen */
+    .card-image {
+        height: 350px; /* Altura fija solo para la foto */
+        width: 100%;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+    .card-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    /* Efecto zoom suave al pasar el mouse */
+    .grid-card:hover .card-image img {
+        transform: scale(1.05);
+    }
+
+    /* Info del Pastel */
+    .cake-name {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+        color: #333;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .cake-price {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1rem;
+        color: #b07d86; /* Color rosado elegante */
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    /* Botón de "Más información" */
+    .btn-info {
+        display: inline-block;
+        border: 1px solid #333;
+        padding: 10px 25px;
+        text-decoration: none;
+        color: #333;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s;
+        align-self: center; /* Centra el botón */
+    }
+
+    .btn-info:hover {
+        background-color: #333;
+        color: white;
+    }
+
+    /* Responsive para celular */
+    @media (max-width: 768px) {
+        .middle-grid {
+            grid-template-columns: 1fr; /* Una sola columna */
+            padding: 0 20px;
+        }
+    }
+
+
+
+
+
+        /* --- 3. SECCIÓN CARRUSEL (Scroll Horizontal) --- */
+        .carousel-section {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .slider-container {
+            display: flex;
+            overflow-x: auto; /* Activa el scroll horizontal */
+            gap: 15px;
+            padding: 0 20px;
+            scroll-snap-type: x mandatory; /* Efecto magnético */
+            
+            /* Ocultar barra de desplazamiento para limpieza */
+            scrollbar-width: none; /* Firefox */
+        }
+        .slider-container::-webkit-scrollbar { display: none; }
+
+        .slide-item {
+            min-width: 200px; /* Tamaño fijo de las miniaturas */
+            height: 200px;
+            scroll-snap-align: start;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .slide-item:hover { opacity: 0.8; }
+
+
+        /* --- RESPONSIVE (CELULAR) --- */
+        @media (max-width: 768px) {
+            .banner-section {
+                grid-template-columns: 1fr; /* Una columna */
+                height: auto;
+            }
+            .banner-text { padding: 60px 20px; order: 2; } /* Texto abajo */
+            .banner-section div:last-child { height: 250px; order: 1; } /* Foto arriba */
+
+            .middle-grid {
+                grid-template-columns: 1fr;
+                height: auto;
+                gap: 20px;
+            }
+            .grid-card { height: 350px; }
+
+            .slide-item {
+                min-width: 150px;
+                height: 150px;
+            }
+        }
+
+
+
+        .carousel-section {
+        padding: 60px 0;
+        text-align: center;
+        overflow: hidden; /* Oculta lo que se salga de la pantalla */
+        background: #fff;
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        text-transform: uppercase;
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+        margin-bottom: 40px;
+        color: #333;
+    }
+
+    /* El riel que se mueve */
+    .slider-track {
+        display: flex;
+        width: max-content; /* El ancho se ajusta al contenido */
+        gap: 20px; /* Espacio entre fotos */
+        
+        /* La magia de la animación: 30 segundos, lineal, infinita */
+        animation: scroll 30s linear infinite;
+    }
+
+    /* Si el usuario pone el mouse encima, la animación se pausa */
+    .slider-track:hover {
+        animation-play-state: paused;
+    }
+
+    .slide-item {
+        width: 250px; /* Ancho fijo de cada foto */
+        height: 250px;
+        flex-shrink: 0; /* Evita que se aplasten */
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .slide-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+    }
+
+    /* Pequeño zoom al pasar el mouse por una foto */
+    .slide-item:hover img {
+        transform: scale(1.1);
+    }
+
+    /* DEFINICIÓN DE LA ANIMACIÓN */
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        /* Movemos el riel un 50% a la izquierda (el tamaño del primer set de fotos) */
+        100% { transform: translateX(-50%); }
+    }
+
+    /* Ajuste para celular */
+    @media (max-width: 768px) {
+        .slide-item { width: 150px; height: 150px; }
+    }
+
+
+
+
+    /* --- SECCIÓN REDES SOCIALES --- */
+    .social-cta {
+        background-color: #faecee; /* Mismo rosa suave del banner anterior */
+        padding: 80px 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .social-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        margin-bottom: 10px;
+        color: #333;
+        letter-spacing: 1px;
+    }
+
+    .social-handle {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        color: #b07d86; /* El color rosado oscuro de tu marca */
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+        display: block;
+    }
+
+    .social-icons-big {
+        display: flex;
+        gap: 30px;
+    }
+
+    .social-circle {
+        width: 60px;
+        height: 60px;
+        background-color: white;
+        border-radius: 50%; /* Círculo perfecto */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: #333;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        text-decoration: none; /* Quita el subrayado */
+    }
+
+    /* Efecto al pasar el mouse: sube un poco y cambia de color */
+    .social-circle:hover {
+        transform: translateY(-5px);
+        background-color: #b07d86;
+        color: white;
+        box-shadow: 0 10px 20px rgba(176, 125, 134, 0.3);
+    }
+
+    @media (max-width: 768px) {
+        .social-title { font-size: 1.5rem; }
+        .social-circle { width: 50px; height: 50px; font-size: 1.2rem; }
+    }
+
+    .social-circle i {
+        color: #333; /* Color gris oscuro por defecto */
+        font-size: 24px; /* Tamaño asegurado */
+    }
+
+    /* Cuando pasas el mouse, se ponen blancos */
+    .social-circle:hover i {
+        color: #fff;
+    }
+    </style>
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<body>
+<header>
+      
+
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Sobre mí</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+
+       
+    </header>
+
+    <div class="brand-title">Los Pasteles </div>
+
+    <main class="hero-grid">
+        <div class="grid-item item-1">
+            <img src="pastel1.jpg" alt="Pastel de colores con cono">
+        </div>
+
+        <div class="grid-item item-2 text-panel">
+            <h2>Diseño de pasteles<br>para bodas y<br>celebraciones</h2>
+   
+        </div>
+
+        <div class="grid-item item-3">
+            <img src="pastel2.jpeg" alt="Pastel de bodas elegante">
+        </div>
+    </main>
+
+  <a href="https://wa.me/50300000000?text=Hola,%20me%20gustaría%20información%20sobre%20un%20pastel" 
+   class="chat-widget" 
+   target="_blank">
+   
+    <i class="fab fa-whatsapp fa-lg"></i>
+    <span>¡Escríbenos!</span>
+</a>
+
+
+
+<br>
+
+
+    <section class="banner-section">
+        <div class="banner-text">
+            <h2>MIS <span>PASTELES</span> SON<br>HECHOS A MANO<br>CON AMOR.</h2>
+            <p>Cada creación es única. Utilizamos ingredientes frescos y técnicas artesanales para asegurar que tu celebración tenga el sabor y la elegancia que merece.</p>
+        </div>
+        <div>
+            <img src="imagengrande.jpeg" alt="Rebanada de pastel">
+        </div>
+    </section>
+
+
+
+
+
+
+  <section class="middle-grid">
+    
+    <div class="grid-card">
+        <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=600&q=80" alt="Pastel Floral">
+        </div>
+        <h3 class="cake-name">Pastel Floral Boda</h3>
+        <p class="cake-price">$120.00</p>
+        <a href="detalle-producto.html" class="btn-info">Más información</a>
+    </div>
+
+    <div class="grid-card">
+        <div class="card-image">
+            <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=600&q=80" alt="Pastel Frutos Rojos">
+        </div>
+        <h3 class="cake-name">Delicia Frutos Rojos</h3>
+        <p class="cake-price">$85.00</p>
+        <a href="detalle-producto.html" class="btn-info">Más información</a>
+    </div>
+
+    <div class="grid-card">
+        <div class="card-image">
+            <img src="pastel3.jpeg" alt="Pastel Blanco">
+        </div>
+        <h3 class="cake-name">Clásico Vainilla</h3>
+        <p class="cake-price">$95.00</p>
+        <a href="detalle-producto.html" class="btn-info">Más información</a>
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+  <section class="carousel-section">
+    <h3 class="section-title">Conoce mis pasteles</h3>
+    
+    <div class="slider-container">
+        <div class="slider-track">
+            
+            <div class="slide-item"><img src="img3.png" alt="Pastel"></div>
+            <div class="slide-item"><img src="img5.jpg" alt="Pastel"></div>
+            <div class="slide-item"><img src="https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=400" alt="Pastel"></div>
+            <div class="slide-item"><img src="https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?w=400" alt="Pastel"></div>
+            <div class="slide-item"><img src="https://images.unsplash.com/photo-1519340333755-56e9c1d04579?w=400" alt="Pastel"></div>
+            <div class="slide-item"><img src="img2.png" alt="Pastel"></div>
+            <div class="slide-item"><img src="https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=400" alt="Pastel"></div>
+            
+            <div class="slide-item"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400" alt="Pastel"></div>
+            <div class="slide-item"><img src="img1.jpg" alt="Pastel"></div>
+            <div class="slide-item"><img src="https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=400" alt="Pastel"></div>
+            <div class="slide-item"><img src="pastel1.jpg" alt="Pastel"></div>
+            <div class="slide-item"><img src="https://images.unsplash.com/photo-1519340333755-56e9c1d04579?w=400" alt="Pastel"></div>
+            <div class="slide-item"><img src="pastel3.jpeg" alt="Pastel"></div>
+            <div class="slide-item"><img src="pastel2.jpeg" alt="Pastel"></div>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+<section class="social-cta">
+    <h2 class="social-title">Síguenos en Nuestras Redes</h2>
+    <span class="social-handle">@LosPasteles</span>
+    
+    <div class="social-icons-big">
+        <a href="https://instagram.com" target="_blank" class="social-circle">
+            <i class="fab fa-instagram"></i>
+        </a>
+        
+        <a href="https://facebook.com" target="_blank" class="social-circle">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        
+     
+        
+        <a href="https://tiktok.com" target="_blank" class="social-circle">
+            <i class="fab fa-tiktok"></i>
+        </a>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pastel Floral - Detalles</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- ESTILOS BASE (Igual que la anterior) --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Montserrat', sans-serif; color: #444; background-color: #fff; }
+        a { text-decoration: none; color: inherit; }
+
+        /* --- HEADER (Copiado para consistencia) --- */
+        header { padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
+        .brand-mini { font-family: 'Playfair Display', serif; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
+        nav ul { list-style: none; display: flex; gap: 30px; }
+        nav ul li a { text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+
+        /* --- CONTENEDOR DEL PRODUCTO --- */
+        .product-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 50% foto, 50% info */
+            gap: 60px;
+        }
+
+        /* --- LADO IZQUIERDO: GALERÍA DE FOTOS --- */
+        .gallery-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+
+        .thumbnail-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .thumb {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .thumb:hover, .thumb.active {
+            opacity: 1;
+            border-color: #b07d86; /* Borde rosado al seleccionar */
+        }
+
+        /* --- LADO DERECHO: INFORMACIÓN --- */
+        .product-details {
+            padding-top: 20px;
+        }
+
+        .breadcrumb {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .price {
+            font-size: 1.8rem;
+            color: #b07d86; /* Color de acento */
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .meta-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .description {
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .ingredients-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .ingredients-list {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .ingredients-list li {
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        /* Pequeño punto rosado antes de cada ingrediente */
+        .ingredients-list li::before {
+            content: "•";
+            color: #b07d86;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* BOTÓN DE COMPRA */
+        .btn-buy {
+            display: inline-block;
+            background-color: #333;
+            color: white;
+            padding: 18px 40px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .btn-buy:hover {
+            background-color: #b07d86;
+        }
+
+        /* --- RESPONSIVE (CELULAR) --- */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; }
+            
+            .product-container {
+                grid-template-columns: 1fr; /* Una sola columna */
+                gap: 30px;
+                margin-top: 20px;
+            }
+
+            .main-image { height: 350px; } /* Imagen un poco más pequeña en móvil */
+            
+            h1 { font-size: 2rem; }
+        }
+
+        /* Estilo para el Selector de Tamaño */
+.size-selector-container {
+    margin-bottom: 20px;
+}
+
+.size-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.custom-select {
+    width: 100%;
+    padding: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #555;
+    cursor: pointer;
+    outline: none;
+}
+
+.custom-select:focus {
+    border-color: #b07d86; /* Borde rosa al seleccionar */
+}
+
+/* Sección de "También te podría gustar" (Reutilizando estilos) */
+.related-section {
+    max-width: 1200px;
+    margin: 0 auto 60px auto;
+    padding: 0 20px;
+    border-top: 1px solid #eee;
+    padding-top: 50px;
+}
+
+.related-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    margin-bottom: 40px;
+}
+    </style>
+</head>
+<link rel="stylesheet" href="styles.css">
+<body>
+
+    <header>
+        <a href="index.html" class="brand-mini">Los Pasteles </a>
+        <nav><ul><li><a href="index.html">Volver al Catálogo</a></li></ul></nav>
+    </header>
+
+    <main class="product-container">
+        <div class="gallery-wrapper">
+            <div class="main-image">
+                <img id="currentImg" src="https://images.unsplash.com/photo-1535141192574-5d4897c12636?auto=format&fit=crop&w=800&q=80" alt="Pastel Principal">
+            </div>
+            <div class="thumbnail-row">
+                <img class="thumb active" src="https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=200" onclick="changeImage(this)">
+                <img class="thumb" src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=200" onclick="changeImage(this)">
+                <img class="thumb" src="https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=200" onclick="changeImage(this)">
+            </div>
+        </div>
+
+        <div class="product-details">
+            <div class="breadcrumb">Catálogo / Bodas / Pastel Floral</div>
+            
+            <h1 id="productName">Pastel Floral Boda</h1>
+            
+            <p class="price" id="displayPrice">$25.00</p>
+
+            <div class="size-selector-container">
+                <label class="size-label">Selecciona el tamaño:</label>
+                <select id="cakeSize" class="custom-select" onchange="updatePrice()">
+                    <option value="25" data-personas="10 personas">Pequeño (10 Personas)</option>
+                    <option value="50" data-personas="20 personas">Mediano (20 Personas)</option>
+                    <option value="85" data-personas="40 personas">Grande (40 Personas)</option>
+                    <option value="120" data-personas="60 personas">Boda XL (60 Personas)</option>
+                </select>
+            </div>
+
+            <p class="description">
+                Un diseño romántico y elegante con cobertura de buttercream suizo. 
+                Selecciona el tamaño arriba para ver el precio actualizado.
+            </p>
+
+            <h3 class="ingredients-title">Lo que incluye:</h3>
+            <ul class="ingredients-list">
+                <li>Bizcocho húmedo de vainilla.</li>
+                <li>Relleno de crema de mascarpone.</li>
+                <li>Decoración con flores naturales.</li>
+                <li>Topper personalizado.</li>
+            </ul>
+
+            <a id="whatsappBtn" href="#" target="_blank" class="btn-buy">
+                <i class="fab fa-whatsapp" style="margin-right: 8px;"></i> Pedir este pastel
+            </a>
+        </div>
+    </main>
+
+    <section class="related-section">
+        <h3 class="related-title">Otros clientes también vieron</h3>
+        
+        <div class="middle-grid">
+            <div class="grid-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600" alt="Relacionado">
+                </div>
+                <h3 class="cake-name">Frutos del Bosque</h3>
+                <p class="cake-price">Desde $30.00</p>
+                <a href="#" class="btn-info">Ver detalles</a>
+            </div>
+
+            <div class="grid-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1562774053-701939374585?w=600" alt="Relacionado">
+                </div>
+                <h3 class="cake-name">Vainilla Clásica</h3>
+                <p class="cake-price">Desde $25.00</p>
+                <a href="#" class="btn-info">Ver detalles</a>
+            </div>
+
+             <div class="grid-card">
+                <div class="card-image">
+                    <img src="img1.jpg" alt="Relacionado">
+                </div>
+                <h3 class="cake-name">Chocolate Gold</h3>
+                <p class="cake-price">Desde $40.00</p>
+                <a href="#" class="btn-info">Ver detalles</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 1. Función para la Galería de fotos
+        function changeImage(element) {
+            document.getElementById('currentImg').src = element.src;
+            let thumbs = document.querySelectorAll('.thumb');
+            thumbs.forEach(thumb => thumb.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        // 2. Función para Actualizar Precio y Link de WhatsApp
+        function updatePrice() {
+            // Obtener elementos del HTML
+            const selector = document.getElementById('cakeSize');
+            const priceText = document.getElementById('displayPrice');
+            const whatsappBtn = document.getElementById('whatsappBtn');
+            const productName = document.getElementById('productName').innerText;
+            
+            // Obtener la opción seleccionada actualmente
+            const selectedOption = selector.options[selector.selectedIndex];
+            const price = selectedOption.value; // Ej: "50"
+            const sizeLabel = selectedOption.getAttribute('data-personas'); // Ej: "20 personas"
+
+            // A. Actualizar el precio visualmente
+            priceText.innerText = '$' + price + '.00';
+
+            // B. Construir el enlace de WhatsApp dinámic|o
+            // Tu número de teléfono (cámbialo aquí)
+            const phone = "69755464";
+            // Crear el mensaje: "Hola, quiero el Pastel Floral para 20 personas ($50)"
+            const message = `Hola, me interesa el ${productName} para ${sizeLabel} que cuesta $${price}.`;
+            
+            // Codificar el mensaje para URL (cambia espacios por %20)
+            const encodedMessage = encodeURIComponent(message);
+
+            // Actualizar el botón
+            whatsappBtn.href = `https://wa.me/${phone}?text=${encodedMessage}`;
+        }
+
+        // Ejecutar una vez al cargar la página para que el botón funcione desde el inicio
+        window.onload = updatePrice;
+    </script>
+
+</body>
+</html>
